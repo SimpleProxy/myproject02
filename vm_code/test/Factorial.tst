@@ -7,8 +7,8 @@ output-file Factorial.out,
 output-list RAM[0]%D2.6.2 RAM[2]%D2.6.2;
 
 set PC 0,
-set RAM[1] 20,   // Set test arguments
-set RAM[1] 20,
+set RAM[0] 500,   // Set test arguments
+set RAM[1] 500,
 set RAM[2] -1;  // Ensure that program initialized product to 0
 repeat 1 {
   ticktock;

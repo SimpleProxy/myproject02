@@ -9,43 +9,107 @@ import matplotlib.pyplot as plt
 #                       WebAgg, WX{_,Agg,Cairo}
 mplt.use("TkAgg")
 
-def plot_perf_graphs():
-    # files that will be read
-    userMarks = open("user_fac_marks.txt", "r")
-    mathlibMarks = open("mathlib_fac_marks.txt", "r")
+def plot_user_fac_graph():
+    userMarks = open("./results/vector_nxt_user.txt", "r")
+    userMarks.seek(0,0)
+
+    x = []
+    y = []
+
+    for line in userMarks.readlines():
+        n,t = line.split()
+        x.append(int(n))
+        y.append(int(t))
 
     # plot config
-    plt.xlim(0,1000)
-    plt.ylim(0,1000)
+    plt.xlim(min(x), max(x))
+    plt.ylim(min(y), max(y))
 
-# FIXME!
-x = [i for i in range(1, 100)]
-y = [2 * i for i in x]
+    # axis labels
+    plt.xlabel("N", loc = "center", fontsize=10)
+    plt.ylabel("time", loc = "center", fontsize=10)
 
-u = x
-v = [j ** 2 for j in u]
+    # plotting
+    # plot arguments are (x, y, color="<color>", linestyle="<style>", marker="<str>",
+    # makerfacecolor="<color>", markersize=<int>)
+    p1 = plt.plot(x, y, color="green",
+             linewidth=1, linestyle="dotted", markersize=5,
+             label="user")
 
-# axis lenght (arguments are a range)
-plt.xlim(1,100)
-plt.ylim(1,1000)
+    plt.legend(loc="upper left")
 
-# axis labels
-plt.xlabel("n", loc = "center")
-plt.ylabel("time", loc = "center")
+    # plt.savefig(fname, dpi=, facecolor=, edgecolor=, orientation=, papertype=, format=,
+    # transparent=, bbox_inches=, pad_inches=, frameon=, metadata=)
+    plt.savefig("./graphs/plot_user_time.png", dpi=300, format="png")
 
-# plotting
-# plot arguments are (x, y, color="<color>", linestyle="<style>", marker="<str>",
-# makerfacecolor="<color>", markersize=<int>)
-plt.plot(x, y)
+    plt.clf() # clear current figure
 
-plt.plot(u, v)
 
-plt.legend(["x*2", "x**2"])
+def plot_math_fac_graph():
+    mathlibMarks = open("./results/vector_nxt_mathlib.txt", "r")
+    mathlibMarks.seek(0,0)
 
-plt.title("time comparison")
+    u = []
+    v = []
 
-# plt.savefig(fname, dpi=, facecolor=, edgecolor=, orientation=, papertype=, format=,
-# transparent=, bbox_inches=, pad_inches=, frameon=, metadata=)
-plt.savefig("time_plot.png", dpi=300, format="png")
+    for line in mathlibMarks.readlines():
+        n,t = line.split()
+        u.append(int(n))
+        v.append(int(t))
 
-plt.show()
+    # plot config
+    plt.xlim(min(u), max(u))
+    plt.ylim(min(v), max(v))
+
+    # axis labels
+    plt.xlabel("N", loc = "center")
+    plt.ylabel("time", loc = "center")
+
+    plt.plot(u, v, color="red",
+             linewidth=1, linestyle="solid", markersize=5,
+             label="mathlib")
+
+    plt.legend(loc="upper left")
+
+    #plt.title("time comparison")
+
+    # plt.savefig(fname, dpi=, facecolor=, edgecolor=, orientation=, papertype=, format=,
+    # transparent=, bbox_inches=, pad_inches=, frameon=, metadata=)
+    plt.savefig("./graphs/plot_math_time.png", dpi=300, format="png")
+
+    plt.clf() # clear current figure
+
+def plot_vm_fac_graph():
+    vmMarks = open("./results/vector_nxt_vm.txt", "r")
+    vmMarks.seek(0,0)
+
+    z = []
+    w = []
+
+    for line in vmMarks.readlines():
+        n,t = line.split()
+        z.append(int(n))
+        w.append(int(t))
+
+    # plot config
+    plt.xlim(min(z), max(z))
+    plt.ylim(min(w), max(w))
+
+    # axis labels
+    plt.xlabel("N", loc = "center")
+    plt.ylabel("time", loc = "center")
+
+    # plotting
+    plt.plot(z, w, color="blue",
+             linewidth=1, linestyle="dashed", markersize=5,
+             label="VM")
+
+    plt.legend(loc="upper left")
+
+    plt.savefig("./graphs/plot_vm_time.png", dpi=300, format="png")
+
+    plt.clf() # clear current figure
+
+plot_math_fac_graph()
+plot_user_fac_graph()
+plot_vm_fac_graph()

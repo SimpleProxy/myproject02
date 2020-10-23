@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 # interactive backends: GTK3{Agg,Cairo}, MacOSX, nbAgg, Qt{4,5}{Agg,Cairo}, Tk{Agg,Cairo},
 #                       WebAgg, WX{_,Agg,Cairo}
 mplt.use("TkAgg")
+# auto adjust plots layouts
+mplt.rcParams.update({"figure.autolayout": True})
 
 def plot_user_fac_graph():
     userMarks = open("./results/vector_nxt_user.txt", "r")
@@ -26,13 +28,13 @@ def plot_user_fac_graph():
     plt.ylim(min(y), max(y))
 
     # axis labels
-    plt.xlabel("N", loc = "center", fontsize=10)
-    plt.ylabel("time", loc = "center", fontsize=10)
+    plt.xlabel("N", loc = "center")
+    plt.ylabel("time(ns)", loc = "center")
 
     # plotting
     # plot arguments are (x, y, color="<color>", linestyle="<style>", marker="<str>",
     # makerfacecolor="<color>", markersize=<int>)
-    p1 = plt.plot(x, y, color="green",
+    plt.plot(x, y, color="green",
              linewidth=1, linestyle="dotted", markersize=5,
              label="user")
 
@@ -63,7 +65,7 @@ def plot_math_fac_graph():
 
     # axis labels
     plt.xlabel("N", loc = "center")
-    plt.ylabel("time", loc = "center")
+    plt.ylabel("time(ns)", loc = "center")
 
     plt.plot(u, v, color="red",
              linewidth=1, linestyle="solid", markersize=5,
@@ -71,10 +73,6 @@ def plot_math_fac_graph():
 
     plt.legend(loc="upper left")
 
-    #plt.title("time comparison")
-
-    # plt.savefig(fname, dpi=, facecolor=, edgecolor=, orientation=, papertype=, format=,
-    # transparent=, bbox_inches=, pad_inches=, frameon=, metadata=)
     plt.savefig("./graphs/plot_math_time.png", dpi=300, format="png")
 
     plt.clf() # clear current figure
@@ -97,7 +95,7 @@ def plot_vm_fac_graph():
 
     # axis labels
     plt.xlabel("N", loc = "center")
-    plt.ylabel("time", loc = "center")
+    plt.ylabel("time(ns)", loc = "center")
 
     # plotting
     plt.plot(z, w, color="blue",

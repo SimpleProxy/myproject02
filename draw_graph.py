@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 # interactive backends: GTK3{Agg,Cairo}, MacOSX, nbAgg, Qt{4,5}{Agg,Cairo}, Tk{Agg,Cairo},
 #                       WebAgg, WX{_,Agg,Cairo}
 mplt.use("TkAgg")
+# auto adjust plots layouts
+mplt.rcParams.update({"figure.autolayout": True})
 
 def plot_graphs():
     userMarks = open("./results/vector_nxt_user.txt", "r")

@@ -10,10 +10,10 @@ set PC 0,
 set RAM[0] 500,   // Set test arguments
 set RAM[1] 500,
 set RAM[2] -1;  // Ensure that program initialized product to 0
-repeat 1 {
+repeat 500000 {
   ticktock;
 }
-set RAM[10] 10,   // Restore arguments in case program used them as loop counter
-set RAM[10] 10,
+set RAM[0] 0,   // Restore arguments in case program used them as loop counter
+set RAM[1] 500,
 output;
 

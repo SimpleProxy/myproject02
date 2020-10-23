@@ -3,16 +3,14 @@
 # standart libraries
 from time import sleep
 from time import process_time_ns as timer_ns
-from timeit import default_timer as timer
-from datetime import timedelta as delta
 # to call the respective routines
 import subprocess as ps
 
 # local imports
-import udfactorial as uf
-from math import factorial as mf
+import pyfactorial as pyf
+import mathfactorial as mtf
 
-# third party module that reports time mesurements
+# timebudget reports time mesurements when script ends
 from timebudget import timebudget
 
 # timebudget configuration
@@ -21,11 +19,11 @@ timebudget.report_at_exit()
 
 @timebudget
 def user_defined_fac(n):
-    return uf.udfactorial(n)
+    return pyf.iterative_factorial(n)
 
 @timebudget
 def mathlib_defined_fac(n):
-    return mf(n)
+    return mtf.factorial(n)
 
 @timebudget
 def vm_defined_fac(n):

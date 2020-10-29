@@ -1,4 +1,7 @@
 #!/bin/python3
+# -*- coding: utf-8 -*-
+
+# file name: profiletool.py
 
 # standart libraries
 from time import sleep
@@ -10,22 +13,19 @@ import subprocess as ps
 import pyfactorial as pyf
 import mathfactorial as mtf
 
-# timebudget reports time mesurements when script ends
-from timebudget import timebudget
+def _vector():
+    return range(2, 501, 2)
 
-# timebudget configuration
-timebudget.set_quiet()
-timebudget.report_at_exit()
+def _mod_asm(num):
+    ps.run(["./asmmodifier.sh", num])
+    sleep(0.01)
 
-@timebudget
 def user_defined_fac(n):
     return pyf.iterative_factorial(n)
 
-@timebudget
 def mathlib_defined_fac(n):
     return mtf.factorial(n)
 
-@timebudget
 def vm_defined_fac(n):
     ps.run(["./vm_code/hack_machine/CPUEmulator.sh",
             "./vm_code/test/Factorial.tst",
@@ -33,15 +33,14 @@ def vm_defined_fac(n):
             capture_output=True,
             text=True)
 
+
 def test_user_factorial():
     results = open("./results/vector_nxt_user.txt", "w")
     results.seek(0,2)
-    vector = open("vector_entries.txt", "r")
-    vector.seek(0,0)
 
     totalTime = 0
 
-    for num in vector.read().split():
+    for num in _vector():
 
         start = timer_ns()
         fac = user_defined_fac(int(num))
@@ -51,21 +50,18 @@ def test_user_factorial():
 
         results.write(f"{num} {dt}\n")
         print(f"factorial of {num} took {dt} nanoseconds")
-        sleep(0.05)
+        sleep(0.02)
 
-    vector.close()
     print(f"Total time elapsed: {totalTime} nanoseconds")
     results.close()
 
 def test_math_factorial():
     results = open("./results/vector_nxt_mathlib.txt", "w")
     results.seek(0,2)
-    vector = open("vector_entries.txt", "r")
-    vector.seek(0,0)
 
     totalTime = 0
 
-    for num in vector.read().split():
+    for num in _vector():
 
         start = timer_ns()
         fac = mathlib_defined_fac(int(num))
@@ -75,23 +71,20 @@ def test_math_factorial():
 
         results.write(f"{num} {dt}\n")
         print(f"factorial of {num} took {dt} nanoseconds")
-        sleep(0.05)
+        sleep(0.02)
 
-    vector.close()
     print(f"Total time elapsed: {totalTime} nanoseconds")
     results.close()
 
 def test_vm_factorial():
     results = open("./results/vector_nxt_vm.txt", "w")
     results.seek(0,2)
-    vector = open("vector_entries.txt", "r")
-    vector.seek(0,0)
 
     totalTime = 0
 
-    for num in vector.read().split():
+    for num in _vector():
 
-        ps.run(["./asmmodifier.sh", str(num)])
+        _mod_asm(str(num)) # modify asm file
 
         start = timer_ns()
         vm_defined_fac(int(num))
@@ -101,13 +94,13 @@ def test_vm_factorial():
 
         results.write(f"{num} {dt}\n")
         print(f"factorial of {num} took {dt} nanoseconds")
-        sleep(0.05)
+        sleep(0.02)
 
-    vector.close()
     print(f"Total time elapsed: {totalTime} nanoseconds")
     results.close()
 
 
-test_user_factorial()
-test_math_factorial()
-test_vm_factorial()
+if __name__ == "__main__":
+    test_user_factorial()
+    test_math_factorial()
+    test_vm_factorial()

@@ -1,4 +1,7 @@
 #!/bin/python3
+# -*- coding: utf-8 -*-
+
+# file name: draw_graph.py
 
 import matplotlib as mplt
 import matplotlib.pyplot as plt
@@ -51,7 +54,7 @@ def plot_graphs():
 
     # axis labels
     plt.xlabel("N", loc = "center", fontsize=10)
-    plt.ylabel("time", loc = "center", fontsize=10)
+    plt.ylabel("time(in nanoseconds)", loc = "center", fontsize=10)
 
     # plotting
     # plot arguments are (x, y, color="<color>", linestyle="<style>", marker="<str>",
@@ -71,6 +74,12 @@ def plot_graphs():
     # place the legend at the top left corner
     plt.legend(loc="upper left")
 
+    # auto scale axis
+    plt.autoscale(enable=True, axis="x", tight=True)
+    plt.autoscale(enable=True, axis="y", tight=True)
+
+    #draw a grid
+    plt.grid()
     # save plots
     plt.savefig("./graphs/uni_plot.png", dpi=300, format="png")
 

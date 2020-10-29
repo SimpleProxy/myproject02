@@ -1,4 +1,7 @@
 #!/bin/python3
+# -*- coding: utf-8 -*-
+
+# file name: plot_test_data.py
 
 import matplotlib as mplt
 import matplotlib.pyplot as plt
@@ -29,7 +32,7 @@ def plot_user_fac_graph():
 
     # axis labels
     plt.xlabel("N", loc = "center")
-    plt.ylabel("time(ns)", loc = "center")
+    plt.ylabel("time(in nanoseconds)", loc = "center")
 
     # plotting
     # plot arguments are (x, y, color="<color>", linestyle="<style>", marker="<str>",
@@ -39,6 +42,13 @@ def plot_user_fac_graph():
              label="user")
 
     plt.legend(loc="upper left")
+
+    # auto scale axis
+    plt.autoscale(enable=True, axis="x", tight=True)
+    plt.autoscale(enable=True, axis="y", tight=True)
+
+    #draw a grid
+    plt.grid()
 
     # plt.savefig(fname, dpi=, facecolor=, edgecolor=, orientation=, papertype=, format=,
     # transparent=, bbox_inches=, pad_inches=, frameon=, metadata=)
@@ -65,13 +75,20 @@ def plot_math_fac_graph():
 
     # axis labels
     plt.xlabel("N", loc = "center")
-    plt.ylabel("time(ns)", loc = "center")
+    plt.ylabel("time(in nanoseconds)", loc = "center")
 
     plt.plot(u, v, color="red",
              linewidth=1, linestyle="solid", markersize=5,
              label="mathlib")
 
     plt.legend(loc="upper left")
+
+    # auto scale axis
+    plt.autoscale(enable=True, axis="x", tight=True)
+    plt.autoscale(enable=True, axis="y", tight=True)
+
+    #draw a grid
+    plt.grid()
 
     plt.savefig("./graphs/plot_math_time.png", dpi=300, format="png")
 
@@ -95,7 +112,7 @@ def plot_vm_fac_graph():
 
     # axis labels
     plt.xlabel("N", loc = "center")
-    plt.ylabel("time(ns)", loc = "center")
+    plt.ylabel("time(in nanoseconds)", loc = "center")
 
     # plotting
     plt.plot(z, w, color="blue",
@@ -104,10 +121,18 @@ def plot_vm_fac_graph():
 
     plt.legend(loc="upper left")
 
+    # auto scale axis
+    plt.autoscale(enable=True, axis="x", tight=True)
+    plt.autoscale(enable=True, axis="y", tight=True)
+
+    #draw a grid
+    plt.grid()
+
     plt.savefig("./graphs/plot_vm_time.png", dpi=300, format="png")
 
     plt.clf() # clear current figure
 
-plot_math_fac_graph()
-plot_user_fac_graph()
-plot_vm_fac_graph()
+if __name__ == "__main__":
+    plot_math_fac_graph()
+    plot_user_fac_graph()
+    plot_vm_fac_graph()
